@@ -10,7 +10,11 @@
 var Phaser = Phaser || {
 
 	VERSION: '<%= version %>',
+<<<<<<< HEAD
 	DEV_VERSION: '1.2',
+=======
+	DEV_VERSION: '1.1.6',
+>>>>>>> upstream/master
 	GAMES: [],
 
 	AUTO: 0,

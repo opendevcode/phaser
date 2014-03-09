@@ -1,6 +1,10 @@
 {
   "name": "Phaser",
+<<<<<<< HEAD
   "version": "2.0.0",
+=======
+  "version": "1.1.6",
+>>>>>>> upstream/master
   "description": "A fast, free and fun HTML5 Game Framework for Desktop and Mobile web browsers.",
   "author": "Richard Davey",
   "logo": "https://raw.github.com/photonstorm/phaser/master/phaser-logo-small.png",

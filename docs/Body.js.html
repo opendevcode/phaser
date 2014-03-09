@@ -445,6 +445,7 @@
 					<ul class="dropdown-menu ">
 						
 						<li>
+<<<<<<< HEAD
 							<a href="global.html#canUseNewCanvasBlendModes">canUseNewCanvasBlendModes</a>
 						</li>
 						
@@ -466,6 +467,9 @@
 						
 						<li>
 							<a href="global.html#rgb2hex">rgb2hex</a>
+=======
+							<a href="global.html#SAT">SAT</a>
+>>>>>>> upstream/master
 						</li>
 						
 
@@ -986,8 +990,15 @@ Phaser.Physics.Body.prototype = {
     */
     reverse: function (speed) {
 
+<<<<<<< HEAD
         var magnitude = this.px2pi(-speed);
         var angle = this.data.angle + Math.PI / 2;
+=======
+            if (this.speed > 0 || !this.velocity.isZero())
+            {
+                this.velocity.x = Math.cos(this.angle) * this.speed;
+                this.velocity.y = Math.sin(this.angle) * this.speed;
+>>>>>>> upstream/master
 
         this.data.force[0] -= magnitude * Math.cos(angle);
         this.data.force[1] -= magnitude * Math.sin(angle);
@@ -1319,7 +1330,14 @@ Phaser.Physics.Body.prototype = {
     */
     addPolygon: function (options, points) {
 
+<<<<<<< HEAD
         options = options || {};
+=======
+        // if (this.inContact(body))
+        // {
+            // return false;
+        // }
+>>>>>>> upstream/master
 
         points = Array.prototype.slice.call(arguments, 1);
 
@@ -1332,17 +1350,38 @@ Phaser.Physics.Body.prototype = {
         }
         else if (Array.isArray(points[0]))
         {
+<<<<<<< HEAD
             path = points[0].slice(0);
             // for (var i = 0, len = points[0].length; i &lt; len; i += 2)
             // {
             //     path.push([points[0][i], points[0][i + 1]]);
             // }
+=======
+            //  Which is smaller? Left or Right?
+            if (this._distances[0] &lt; this._distances[1])
+            {
+                hasSeparated = this.hitLeft(body, response);
+            }
+            else if (this._distances[1] &lt; this._distances[0])
+            {
+                hasSeparated = this.hitRight(body, response);
+            }
+>>>>>>> upstream/master
         }
         else if (typeof points[0] === 'number')
         {
+<<<<<<< HEAD
             // console.log('addPolygon --- We\'ve a list of numbers');
             //  We've a list of numbers
             for (var i = 0, len = points.length; i &lt; len; i += 2)
+=======
+            //  Which is smaller? Top or Bottom?
+            if (this._distances[2] &lt; this._distances[3])
+            {
+                hasSeparated = this.hitTop(body, response);
+            }
+            else if (this._distances[3] &lt; this._distances[2])
+>>>>>>> upstream/master
             {
                 path.push([points[i], points[i + 1]]);
             }
@@ -1384,7 +1423,19 @@ Phaser.Physics.Body.prototype = {
     */
     removeShape: function (shape) {
 
+<<<<<<< HEAD
         return this.data.removeShape(shape);
+=======
+        if (!this.checkCollision.left || !body.checkCollision.right)
+        {
+            return false;
+        }
+
+        if (this.collideCallback && !this.collideCallback.call(this.collideCallbackContext, Phaser.LEFT, this, body, response))
+        {
+            return false;
+        }
+>>>>>>> upstream/master
 
     },
 
@@ -1403,6 +1454,8 @@ Phaser.Physics.Body.prototype = {
 
         this.addCircle(radius, offsetX, offsetY, rotation);
 
+        return true;
+
     },
 
     /**
@@ -1419,12 +1472,26 @@ Phaser.Physics.Body.prototype = {
     */
     setRectangle: function (width, height, offsetX, offsetY, rotation) {
 
+<<<<<<< HEAD
         if (typeof width === 'undefined') { width = 16; }
         if (typeof height === 'undefined') { height = 16; }
+=======
+        if (!this.checkCollision.right || !body.checkCollision.left)
+        {
+            return false;
+        }
+
+        if (this.collideCallback && !this.collideCallback.call(this.collideCallbackContext, Phaser.RIGHT, this, body))
+        {
+            return false;
+        }
+>>>>>>> upstream/master
 
         this.clearShapes();
 
         return this.addRectangle(width, height, offsetX, offsetY, rotation);
+
+        return true;
 
     },
 
@@ -1439,6 +1506,7 @@ Phaser.Physics.Body.prototype = {
     */
     setRectangleFromSprite: function (sprite) {
 
+<<<<<<< HEAD
         if (typeof sprite === 'undefined') { sprite = this.sprite; }
 
         this.clearShapes();
@@ -1456,6 +1524,17 @@ Phaser.Physics.Body.prototype = {
     * @param {p2.Shape} [shape] - An optional Shape. If not provided the Material will be added to all Shapes in this Body.
     */
     setMaterial: function (material, shape) {
+=======
+        if (!this.checkCollision.up || !body.checkCollision.down)
+        {
+            return false;
+        }
+
+        if (this.collideCallback && !this.collideCallback.call(this.collideCallbackContext, Phaser.UP, this, body))
+        {
+            return false;
+        }
+>>>>>>> upstream/master
 
         if (typeof shape === 'undefined')
         {
@@ -1485,7 +1564,19 @@ Phaser.Physics.Body.prototype = {
     */
     loadPolygon: function (key, object, options) {
 
+<<<<<<< HEAD
         var data = this.game.cache.getPhysicsData(key, object);
+=======
+        if (!this.checkCollision.down || !body.checkCollision.up)
+        {
+            return false;
+        }
+
+        if (this.collideCallback && !this.collideCallback.call(this.collideCallbackContext, Phaser.DOWN, this, body))
+        {
+            return false;
+        }
+>>>>>>> upstream/master
 
         if (data && data.shape)
         {
@@ -1552,6 +1643,7 @@ Phaser.Physics.Body.prototype = {
     */
     px2p: function (v) {
 
+<<<<<<< HEAD
         return v * 0.05;
 
     },
@@ -1564,6 +1656,16 @@ Phaser.Physics.Body.prototype = {
     * @return {number} The scaled value.
     */
     p2pxi: function (v) {
+=======
+        if (this.moves)
+        {
+            this.game.physics.checkBounds(this);
+
+            this.reboundCheck(true, true, true);
+
+            this._dx = this.deltaX();
+            this._dy = this.deltaY();
+>>>>>>> upstream/master
 
         return v *= -20;
 
@@ -2010,7 +2112,11 @@ Object.defineProperty(Phaser.Physics.Body.prototype, "y", {
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a>
+<<<<<<< HEAD
 		on Mon Feb 24 2014 12:11:34 GMT-0000 (GMT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+=======
+		on Mon Feb 24 2014 01:12:21 GMT-0000 (GMT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+>>>>>>> upstream/master
 		</span>
 				</footer>
 			</div>

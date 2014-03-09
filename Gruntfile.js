@@ -105,8 +105,17 @@ module.exports = function (grunt) {
         'src/system/RequestAnimationFrame.js',
 
         'src/math/Math.js',
+<<<<<<< HEAD
         'src/math/RandomDataGenerator.js',
 
+=======
+        'src/math/QuadTree.js',
+        'src/geom/Circle.js',
+        'src/geom/Point.js',
+        'src/geom/Rectangle.js',
+        'src/geom/Polygon.js',
+        'src/geom/Line.js',
+>>>>>>> upstream/master
         'src/net/Net.js',
 
         'src/tween/TweenManager.js',

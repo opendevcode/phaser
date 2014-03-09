@@ -400,6 +400,7 @@ Phaser.TilemapParser = {
             newSet.columns = (set.imagewidth - set.margin) / (set.tilewidth + set.spacing);
             newSet.total = newSet.rows * newSet.columns;
 
+<<<<<<< HEAD
             if (newSet.rows % 1 !== 0 || newSet.columns % 1 !== 0)
             {
                 console.warn('TileSet image dimensions do not match expected dimensions. Tileset width/height must be evenly divisible by Tilemap tile width/height.');
@@ -408,6 +409,13 @@ Phaser.TilemapParser = {
             {
                 tilesets.push(newSet);
             }
+=======
+            if (newSet.rows % 1 !== 0 || newSet.columns % 1 !== 0) {
+                console.warn('TileSet image dimensions do not match expected dimensions.');
+            }
+
+            tilesets.push(newSet);
+>>>>>>> upstream/master
         }
 
         map.tilesets = tilesets;

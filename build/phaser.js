@@ -59,6 +59,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
  */
 var mat2 = {};
 
+<<<<<<< HEAD
 var mat2Identity = new Float32Array([
     1, 0,
     0, 1
@@ -67,6 +68,31 @@ var mat2Identity = new Float32Array([
 if(!GLMAT_EPSILON) {
     var GLMAT_EPSILON = 0.000001;
 }
+=======
+/**
+* @overview
+*
+* Phaser - http://www.phaser.io
+*
+* v1.1.6 - Built at: Mon Feb 24 2014 21:36:31
+*
+* By Richard Davey http://www.photonstorm.com @photonstorm
+*
+* A feature-packed 2D HTML5 game framework born from the smouldering pits of Flixel and
+* constructed via plenty of blood, sweat, tears and coffee by Richard Davey (@photonstorm).
+*
+* Phaser uses Pixi.js for rendering, created by Mat Groves http://matgroves.com/ @Doormat23.
+*
+* Follow Phaser development progress at http://www.photonstorm.com
+*
+* Many thanks to Adam Saltsman (@ADAMATOMIC) for releasing Flixel, from which both Phaser
+* and my love of game development originate.
+*
+* "If you want your children to be intelligent,  read them fairy tales."
+* "If you want them to be more intelligent, read them more fairy tales."
+*                                                     -- Albert Einstein
+*/
+>>>>>>> upstream/master
 
 /**
  * Creates a new identity mat2
@@ -121,6 +147,7 @@ mat2.identity = function(out) {
     return out;
 };
 
+<<<<<<< HEAD
 /**
  * Transpose the values of a mat2
  *
@@ -143,6 +170,11 @@ mat2.transpose = function(out, a) {
     
     return out;
 };
+=======
+	VERSION: '1.1.6',
+	DEV_VERSION: '1.1.6',
+	GAMES: [],
+>>>>>>> upstream/master
 
 /**
  * Inverts a mat2
@@ -222,6 +254,7 @@ mat2.multiply = function (out, a, b) {
  */
 mat2.mul = mat2.multiply;
 
+<<<<<<< HEAD
 /**
  * Rotates a mat2 by the given angle
  *
@@ -240,6 +273,20 @@ mat2.rotate = function (out, a, rad) {
     out[3] = a2 * -s + a3 * c;
     return out;
 };
+=======
+    /**
+    * Javascript string pad http://www.webtoolkit.info/.
+    * pad = the string to pad it out with (defaults to a space)
+    * dir = 1 (left), 2 (right), 3 (both)
+    * @method Phaser.Utils.pad
+    * @param {string} str - The target string. 
+    * @param {number} len - The number of characters to be added.
+    * @param {number} pad - The string to pad it out with (defaults to a space).
+    * @param {number} [dir=3] The direction dir = 1 (left), 2 (right), 3 (both).
+    * @return {string} The padded string
+    */
+    pad: function (str, len, pad, dir) {
+>>>>>>> upstream/master
 
 /**
  * Scales the mat2 by the dimensions in the given vec2
@@ -25519,7 +25566,20 @@ Phaser.Group.prototype.postUpdate = function () {
         this.y = this.game.camera.view.y + this.cameraOffset.y;
     }
 
+<<<<<<< HEAD
     var i = this.children.length;
+=======
+    /**
+    * Allows you to call your own function on each existing member of this Group (where child.exists=true). You must pass the callback and context in which it will run.
+    * You can add as many parameters as you like, which will all be passed to the callback along with the child.
+    * For example: Group.forEachExists(causeDamage, this, 500)
+    * 
+    * @method Phaser.Group#forEachExists
+    * @param {function} callback - The function that will be called. Each child of the Group will be passed to it as its first parameter.
+    * @param {Object} callbackContext - The context in which the function should be called (usually 'this').
+    */
+    forEachExists: function (callback, callbackContext) {
+>>>>>>> upstream/master
 
     while (i--)
     {
@@ -26086,7 +26146,126 @@ Phaser.World.prototype.boot = function () {
 
     this.game.camera = this.camera;
 
+<<<<<<< HEAD
     this.game.stage.addChild(this);
+=======
+}
+
+/**
+* This is called automatically after the plugins preUpdate and before the State.update.
+* Most objects have preUpdate methods and it's where initial movement, drawing and calculations are done.
+* 
+* @method Phaser.World#preUpdate
+*/
+Phaser.World.prototype.preUpdate = function () {
+    
+    if (this.game.stage._stage.first._iNext)
+    {
+        var currentNode = this.game.stage._stage.first._iNext;
+        
+        do
+        {
+            // If preUpdate exists, and it returns false, skip PIXI child objects
+            if (currentNode['preUpdate'] && !currentNode.preUpdate())
+            {
+                currentNode = currentNode.last._iNext;
+            }
+            else
+            {
+                currentNode = currentNode._iNext;
+            }
+            
+        }
+        while (currentNode != this.game.stage._stage.last._iNext)
+    }
+
+}
+
+/**
+* This is called automatically after the State.update, but before particles or plugins update.
+* Most objects won't have an update method set unless explicitly given one.
+* 
+* @method Phaser.World#update
+*/
+Phaser.World.prototype.update = function () {
+
+    this.currentRenderOrderID = 0;
+    
+    if (this.game.stage._stage.first._iNext)
+    {
+        var currentNode = this.game.stage._stage.first._iNext;
+        
+        do
+        {
+            // If update exists, and it returns false, skip PIXI child objects
+            if (currentNode['update'] && !currentNode.update())
+            {
+                currentNode = currentNode.last._iNext;
+            }
+            else
+            {
+                currentNode = currentNode._iNext;
+            }
+            
+        }
+        while (currentNode != this.game.stage._stage.last._iNext)
+    }
+
+}
+
+/**
+* This is called automatically before the renderer runs and after the plugins have updated.
+* In postUpdate this is where all the final physics calculatations and object positioning happens.
+* The objects are processed in the order of the display list.
+* The only exception to this is if the camera is following an object, in which case that is updated first.
+* 
+* @method Phaser.World#postUpdate
+*/
+Phaser.World.prototype.postUpdate = function () {
+
+    if (this.camera.target && this.camera.target['postUpdate'])
+    {
+        this.camera.target.postUpdate();
+
+        this.camera.update();
+
+        if (this.game.stage._stage.first._iNext)
+        {
+            var currentNode = this.game.stage._stage.first._iNext;
+            
+            do
+            {
+                if (currentNode['postUpdate'] && currentNode !== this.camera.target)
+                {
+                    currentNode.postUpdate();
+                }
+                
+                currentNode = currentNode._iNext;
+            }
+            while (currentNode != this.game.stage._stage.last._iNext)
+        }
+    }
+    else
+    {
+        this.camera.update();
+
+        if (this.game.stage._stage.first._iNext)
+        {
+            var currentNode = this.game.stage._stage.first._iNext;
+            
+            do
+            {
+                if (currentNode['postUpdate'])
+                {
+                    currentNode.postUpdate();
+                }
+                
+                currentNode = currentNode._iNext;
+            }
+            while (currentNode != this.game.stage._stage.last._iNext)
+        }
+    }
+>>>>>>> upstream/master
 
 }
 
@@ -30520,9 +30699,19 @@ Object.defineProperty(Phaser.Gamepad.prototype, "supported", {
 */
 Object.defineProperty(Phaser.Gamepad.prototype, "padsConnected", {
 
+<<<<<<< HEAD
     get: function () {
         return this._rawPads.length;
     }
+=======
+    /**
+    * Is this sprite being dragged by the mouse or not?
+    * @method Phaser.InputHandler#pointerDragged
+    * @param {Phaser.Pointer} pointer
+    * @return {number}
+    */
+    pointerDragged: function (pointer) {
+>>>>>>> upstream/master
 
 });
 
@@ -31888,10 +32077,18 @@ Phaser.InputHandler.prototype = {
     },
 
     /**
+<<<<<<< HEAD
     * Checks if the given pointer is over this Sprite and can click it.
     * @method Phaser.InputHandler#checkPointerDown
     * @param {Phaser.Pointer} pointer
     * @return {boolean}
+=======
+    * Add callbacks to the this Gamepad to handle connect/disconnect/button down/button up/axis change/float value buttons
+    * @method Phaser.SinglePad#addCallbacks
+    * @param {Object} context - The context under which the callbacks are run.
+    * @param {Object} callbacks - Object that takes six different callbak methods:
+    * onConnectCallback, onDisconnectCallback, onDownCallback, onUpCallback, onAxisCallback, onFloatCallback
+>>>>>>> upstream/master
     */
     checkPointerDown: function (pointer) {
 
@@ -34756,11 +34953,15 @@ Phaser.Image.prototype.kill = function() {
 }
 
 /**
+<<<<<<< HEAD
 * Destroys the Image. This removes it from its parent group, destroys the input, event and animation handlers if present
 * and nulls its reference to game, freeing it up for garbage collection.
 * 
 * @method Phaser.Image#destroy
 * @memberof Phaser.Image
+=======
+* @method Phaser.BitmapText.prototype.destroy
+>>>>>>> upstream/master
 */
 Phaser.Image.prototype.destroy = function() {
 
@@ -35264,8 +35465,15 @@ Phaser.TileSprite.prototype.postUpdate = function() {
 * A negative x value will scroll to the left. A positive x value will scroll to the right.
 * A negative y value will scroll up. A positive y value will scroll down.
 *
+<<<<<<< HEAD
 * @method Phaser.TileSprite#autoScroll
 * @memberof Phaser.TileSprite
+=======
+* @protected
+* @method Phaser.Button.prototype.onInputOutHandler
+* @param {Phaser.Button} sprite - The Button that the event occured on.
+* @param {Phaser.Pointer} pointer - The Pointer that activated the Button.
+>>>>>>> upstream/master
 */
 Phaser.TileSprite.prototype.autoScroll = function(x, y) {
 
@@ -35276,8 +35484,15 @@ Phaser.TileSprite.prototype.autoScroll = function(x, y) {
 /**
 * Stops an automatically scrolling TileSprite.
 *
+<<<<<<< HEAD
 * @method Phaser.TileSprite#stopScroll
 * @memberof Phaser.TileSprite
+=======
+* @protected
+* @method Phaser.Button.prototype.onInputDownHandler
+* @param {Phaser.Button} sprite - The Button that the event occured on.
+* @param {Phaser.Pointer} pointer - The Pointer that activated the Button.
+>>>>>>> upstream/master
 */
 Phaser.TileSprite.prototype.stopScroll = function() {
 
@@ -35289,10 +35504,17 @@ Phaser.TileSprite.prototype.stopScroll = function() {
 * Changes the Texture the TileSprite is using entirely. The old texture is removed and the new one is referenced or fetched from the Cache.
 * This causes a WebGL texture update, so use sparingly or in low-intensity portions of your game.
 *
+<<<<<<< HEAD
 * @method Phaser.TileSprite#loadTexture
 * @memberof Phaser.TileSprite
 * @param {string|Phaser.RenderTexture|Phaser.BitmapData|PIXI.Texture} key - This is the image or texture used by the Sprite during rendering. It can be a string which is a reference to the Cache entry, or an instance of a RenderTexture, BitmapData or PIXI.Texture.
 * @param {string|number} frame - If this Sprite is using part of a sprite sheet or texture atlas you can specify the exact frame to use by giving a string or numeric index.
+=======
+* @protected
+* @method Phaser.Button.prototype.onInputUpHandler
+* @param {Phaser.Button} sprite - The Button that the event occured on.
+* @param {Phaser.Pointer} pointer - The Pointer that activated the Button.
+>>>>>>> upstream/master
 */
 Phaser.TileSprite.prototype.loadTexture = function (key, frame) {
 
@@ -35410,8 +35632,12 @@ Phaser.TileSprite.prototype.play = function (name, frameRate, loop, killOnComple
 * Values outside this range are added to or subtracted from 360 to obtain a value within the range. For example, the statement player.angle = 450 is the same as player.angle = 90.
 * If you wish to work in radians instead of degrees use the property Sprite.rotation instead. Working in radians is also a little faster as it doesn't have to convert the angle.
 * 
+<<<<<<< HEAD
 * @name Phaser.TileSprite#angle
 * @property {number} angle - The angle of this Sprite in degrees.
+=======
+* @method Phaser.Graphics.prototype.destroy
+>>>>>>> upstream/master
 */
 Object.defineProperty(Phaser.TileSprite.prototype, "angle", {
 
@@ -38412,6 +38638,20 @@ Phaser.Canvas = {
 
         return canvas;
 
+<<<<<<< HEAD
+=======
+    /**
+    * a is fuzzyLessThan b if it is less than b + &epsilon;. 
+    * @method Phaser.Math#fuzzyLessThan
+    * @param {number} a
+    * @param {number} b
+    * @param {number} epsilon 
+    * @return {boolean} True if a<b+&epsilon;
+    */
+    fuzzyLessThan: function (a, b, epsilon) {
+        if (typeof epsilon === "undefined") { epsilon = 0.0001; }
+        return a < b + epsilon;
+>>>>>>> upstream/master
     },
 
     /**
@@ -40823,11 +41063,18 @@ Phaser.Math = {
     },
 
     /**
+<<<<<<< HEAD
     * Significantly faster version of Math.max
     * See http://jsperf.com/math-s-min-max-vs-homemade/5
     *
     * @method Phaser.Math#max
     * @return {number} The highest value from those given.
+=======
+    * Alters the length of the vector without changing the direction
+    * @method Phaser.Point#setMagnitude
+    * @param {number} magnitude the desired magnitude of the resulting vector
+    * @return {Phaser.Point} the modified original vector
+>>>>>>> upstream/master
     */
     max: function () {
 
@@ -41781,6 +42028,271 @@ Phaser.RandomDataGenerator.prototype.constructor = Phaser.RandomDataGenerator;
 */
 
 /**
+* Creates a new Line object with a start and an end point.
+* @class Line
+* @classdesc Phaser - Line
+* @constructor
+* @param {number} [x1=0] - The x coordinate of the start of the line.
+* @param {number} [y1=0] - The y coordinate of the start of the line.
+* @param {number} [x2=0] - The x coordinate of the end of the line.
+* @param {number} [y2=0] - The y coordinate of the end of the line.
+* @return {Phaser.Line} This line object
+*/
+Phaser.Line = function (x1, y1, x2, y2) {
+
+    x1 = x1 || 0;
+    y1 = y1 || 0;
+    x2 = x2 || 0;
+    y2 = y2 || 0;
+
+    /**
+    * @property {Phaser.Point} start - The start point of the line.
+    */
+    this.start = new Phaser.Point(x1, y1);
+
+    /**
+    * @property {Phaser.Point} end - The end point of the line.
+    */
+    this.end = new Phaser.Point(x2, y2);
+
+};
+
+Phaser.Line.prototype = {
+
+    /**
+    * Sets the components of the Line to the specified values.
+    * @method Phaser.Line#setTo
+    * @param {number} [x1=0] - The x coordinate of the start of the line.
+    * @param {number} [y1=0] - The y coordinate of the start of the line.
+    * @param {number} [x2=0] - The x coordinate of the end of the line.
+    * @param {number} [y2=0] - The y coordinate of the end of the line.
+    * @return {Phaser.Line} This line object
+    */
+    setTo: function (x1, y1, x2, y2) {
+
+        this.start.setTo(x1, y1);
+        this.end.setTo(x2, y2);
+
+        return this;
+
+    },
+
+    /**
+    * Sets the line to match the x/y coordinates of the two given sprites.
+    * Can optionally be calculated from their center coordinates.
+    * @method Phaser.Line#fromSprite
+    * @param {Phaser.Sprite} startSprite - The coordinates of this Sprite will be set to the Line.start point.
+    * @param {Phaser.Sprite} endSprite - The coordinates of this Sprite will be set to the Line.start point.
+    * @param {boolean} [useCenter=true] - If true it will use startSprite.center.x, if false startSprite.x.
+    * @return {Phaser.Line} This line object
+    */
+    fromSprite: function (startSprite, endSprite, useCenter) {
+
+        if (typeof useCenter === 'undefined') { useCenter = true; }
+
+        if (useCenter)
+        {
+            return this.setTo(startSprite.center.x, startSprite.center.y, endSprite.center.x, endSprite.center.y);
+        }
+        else
+        {
+            return this.setTo(startSprite.x, startSprite.y, endSprite.x, endSprite.y);
+        }
+
+    },
+
+    /**
+    * Checks for intersection between this line and another Line.
+    * If asSegment is true it will check for segment intersection. If asSegment is false it will check for line intersection.
+    * Returns the intersection segment of AB and EF as a Point, or null if there is no intersection.
+    *
+    * @method Phaser.Line#intersects
+    * @param {Phaser.Line} line - The line to check against this one.
+    * @param {boolean} [asSegment=true] - If true it will check for segment intersection, otherwise full line intersection.
+    * @param {Phaser.Point} [result] - A Point object to store the result in, if not given a new one will be created.
+    * @return {Phaser.Point} The intersection segment of the two lines as a Point, or null if there is no intersection.
+    */
+    intersects: function (line, asSegment, result) {
+
+        return Phaser.Line.intersectsPoints(this.start, this.end, line.start, line.end, asSegment, result);
+
+    },
+
+    /**
+    * Tests if the given coordinates fall on this line. See pointOnSegment to test against just the line segment.
+    * @method Phaser.Line#pointOnLine
+    * @param {number} x - The line to check against this one.
+    * @param {number} y - The line to check against this one.
+    * @return {boolean} True if the point is on the line, false if not.
+    */
+    pointOnLine: function (x, y) {
+
+        return ((x - this.start.x) * (this.end.y - this.end.y) === (this.end.x - this.start.x) * (y - this.end.y));
+
+    },
+
+    /**
+    * Tests if the given coordinates fall on this line and within the segment. See pointOnLine to test against just the line.
+    * @method Phaser.Line#pointOnSegment
+    * @param {number} x - The line to check against this one.
+    * @param {number} y - The line to check against this one.
+    * @return {boolean} True if the point is on the line and segment, false if not.
+    */
+    pointOnSegment: function (x, y) {
+
+        var xMin = Math.min(this.start.x, this.end.x);
+        var xMax = Math.max(this.start.x, this.end.x);
+        var yMin = Math.min(this.start.y, this.end.y);
+        var yMax = Math.max(this.start.y, this.end.y);
+
+        return (this.pointOnLine(x, y) && (x >= xMin && x <= xMax) && (y >= yMin && y <= yMax));
+
+    }
+
+};
+
+/**
+* @name Phaser.Line#length
+* @property {number} length - Gets the length of the line segment.
+* @readonly
+*/
+Object.defineProperty(Phaser.Line.prototype, "length", {
+
+    get: function () {
+        return Math.sqrt((this.end.x - this.start.x) * (this.end.x - this.start.x) + (this.end.y - this.start.y) * (this.end.y - this.start.y));
+    }
+
+});
+
+/**
+* @name Phaser.Line#angle
+* @property {number} angle - Gets the angle of the line.
+* @readonly
+*/
+Object.defineProperty(Phaser.Line.prototype, "angle", {
+
+    get: function () {
+        return Math.atan2(this.end.x - this.start.x, this.end.y - this.start.y);
+    }
+
+});
+
+/**
+* @name Phaser.Line#slope
+* @property {number} slope - Gets the slope of the line (y/x).
+* @readonly
+*/
+Object.defineProperty(Phaser.Line.prototype, "slope", {
+
+    get: function () {
+        return (this.end.y - this.start.y) / (this.end.x - this.start.x);
+    }
+
+});
+
+/**
+* @name Phaser.Line#perpSlope
+* @property {number} perpSlope - Gets the perpendicular slope of the line (x/y).
+* @readonly
+*/
+Object.defineProperty(Phaser.Line.prototype, "perpSlope", {
+
+    get: function () {
+        return -((this.end.x - this.start.x) / (this.end.y - this.start.y));
+    }
+
+});
+
+/**
+* Checks for intersection between two lines as defined by the given start and end points.
+* If asSegment is true it will check for line segment intersection. If asSegment is false it will check for line intersection.
+* Returns the intersection segment of AB and EF as a Point, or null if there is no intersection.
+* Adapted from code by Keith Hair
+*
+* @method Phaser.Line.intersectsPoints
+* @param {Phaser.Point} a - The start of the first Line to be checked.
+* @param {Phaser.Point} b - The end of the first line to be checked.
+* @param {Phaser.Point} e - The start of the second Line to be checked.
+* @param {Phaser.Point} f - The end of the second line to be checked.
+* @param {boolean} [asSegment=true] - If true it will check for segment intersection, otherwise full line intersection.
+* @param {Phaser.Point} [result] - A Point object to store the result in, if not given a new one will be created.
+* @return {Phaser.Point} The intersection segment of the two lines as a Point, or null if there is no intersection.
+*/
+Phaser.Line.intersectsPoints = function (a, b, e, f, asSegment, result) {
+
+    if (typeof asSegment === 'undefined') { asSegment = true; }
+    if (typeof result === 'undefined') { result = new Phaser.Point(); }
+
+    var a1 = b.y - a.y;
+    var a2 = f.y - e.y;
+    var b1 = a.x - b.x;
+    var b2 = e.x - f.x;
+    var c1 = (b.x * a.y) - (a.x * b.y);
+    var c2 = (f.x * e.y) - (e.x * f.y);
+    var denom = (a1 * b2) - (a2 * b1);
+
+    if (denom === 0)
+    {
+        return null;
+    }
+
+    result.x = ((b1 * c2) - (b2 * c1)) / denom;
+    result.y = ((a2 * c1) - (a1 * c2)) / denom;
+ 
+    if (asSegment)
+    {
+        if (Math.pow((result.x - b.x) + (result.y - b.y), 2) > Math.pow((a.x - b.x) + (a.y - b.y), 2))
+        {
+            return null;
+        }
+
+        if (Math.pow((result.x - a.x) + (result.y - a.y), 2) > Math.pow((a.x - b.x) + (a.y - b.y), 2))
+        {
+            return null;
+        }
+
+        if (Math.pow((result.x - f.x) + (result.y - f.y), 2) > Math.pow((e.x - f.x) + (e.y - f.y), 2))
+        {
+            return null;
+        }
+
+        if (Math.pow((result.x - e.x) + (result.y - e.y), 2) > Math.pow((e.x - f.x) + (e.y - f.y), 2))
+        {
+            return null;
+        }
+    }
+
+    return result;
+
+};
+
+/**
+* Checks for intersection between two lines.
+* If asSegment is true it will check for segment intersection.
+* If asSegment is false it will check for line intersection.
+* Returns the intersection segment of AB and EF as a Point, or null if there is no intersection.
+* Adapted from code by Keith Hair
+*
+* @method Phaser.Line.intersects
+* @param {Phaser.Line} a - The first Line to be checked.
+* @param {Phaser.Line} b - The second Line to be checked.
+* @param {boolean} [asSegment=true] - If true it will check for segment intersection, otherwise full line intersection.
+* @param {Phaser.Point} [result] - A Point object to store the result in, if not given a new one will be created.
+* @return {Phaser.Point} The intersection segment of the two lines as a Point, or null if there is no intersection.
+*/
+Phaser.Line.intersects = function (a, b, asSegment, result) {
+
+    return Phaser.Line.intersectsPoints(a.start, a.end, b.start, b.end, asSegment, result);
+
+};
+
+/**
+* @author       Richard Davey <rich@photonstorm.com>
+* @copyright    2014 Photon Storm Ltd.
+* @license      {@link https://github.com/photonstorm/phaser/blob/master/license.txt|MIT License}
+*/
+
+/**
 * Phaser.Net handles browser URL related tasks such as checking host names, domain names and query string manipulation.
 *
 * @class Phaser.Net
@@ -42117,7 +42629,7 @@ Phaser.TweenManager.prototype = {
     /**
     * Pauses all currently running tweens.
     *
-    * @method Phaser.TweenManager#update
+    * @method Phaser.TweenManager#pauseAll
     */
     pauseAll: function () {
 
@@ -42129,7 +42641,7 @@ Phaser.TweenManager.prototype = {
     },
 
     /**
-    * Pauses all currently paused tweens.
+    * Resumes all currently paused tweens.
     *
     * @method Phaser.TweenManager#resumeAll
     */
@@ -47409,6 +47921,22 @@ Phaser.Loader.prototype = {
         return this;
 
     },
+    
+    /**
+    * Add a custom JSON file to the Loader.
+    *
+    * @method Phaser.Loader#json
+    * @param {string} key - Unique asset key of the json file.
+    * @param {string} url - URL of the json file.
+    * @return {Phaser.Loader} This Loader instance.
+    */
+    json: function (key, url) {
+
+        this.addToFileList('json', key, url);
+
+        return this;
+
+    },
 
     /**
     * Add a binary file to the Loader. It will be loaded via xhr with a responseType of "arraybuffer". You can specify an optional callback to process the file after load.
@@ -47917,12 +48445,12 @@ Phaser.Loader.prototype = {
                 }
 
                 break;
-
             case 'tilemap':
+            case 'json':
                 this._xhr.open("GET", this.baseURL + file.url, true);
                 this._xhr.responseType = "text";
 
-                if (file.format === Phaser.Tilemap.TILED_JSON)
+                if (!file.format || file.format === Phaser.Tilemap.TILED_JSON)
                 {
                     this._xhr.onload = function () {
                         return _this.jsonLoadComplete(_this._fileIndex);
@@ -47944,7 +48472,6 @@ Phaser.Loader.prototype = {
                 };
                 this._xhr.send();
                 break;
-
             case 'text':
             case 'script':
             case 'physics':
@@ -48208,6 +48735,10 @@ Phaser.Loader.prototype = {
         if (file.type === 'tilemap')
         {
             this.game.cache.addTilemap(file.key, file.url, data, file.format);
+        }
+        else if (file.type === 'json')
+        {
+             this.game.cache.addText(file.key, file.url, data);
         }
         else
         {
@@ -50982,10 +51513,852 @@ Phaser.Color = {
     */
     getBlue: function (color) {
         return color & 0xFF;
+<<<<<<< HEAD
+=======
     }
     
 };
 
+// Version 0.2 - Copyright 2013 -  Jim Riecken <jimr@jimr.ca>
+//
+// Released under the MIT License - https://github.com/jriecken/sat-js
+//
+// A simple library for determining intersections of circles and
+// polygons using the Separating Axis Theorem.
+/** @preserve SAT.js - Version 0.2 - Copyright 2013 - Jim Riecken <jimr@jimr.ca> - released under the MIT License. https://github.com/jriecken/sat-js */
+
+var SAT = (function () {
+  "use strict";
+
+  var SAT = {};
+
+  //
+  // ## Vector
+  //
+  // Represents a vector in two dimensions with `x` and `y` properties.
+
+
+  // Create a new Vector, optionally passing in the `x` and `y` coordinates. If
+  // a coordinate is not specified, it will be set to `0`
+  /**
+   * @param {?number=} x The x position.
+   * @param {?number=} y The y position.
+   * @constructor
+   */
+  function Vector(x, y) {
+    this['x'] = x || 0;
+    this['y'] = y || 0;
+  }
+  SAT['Vector'] = Vector;
+  // Alias `Vector` as `V`
+  SAT['V'] = Vector;
+
+
+  // Copy the values of another Vector into this one.
+  /**
+   * @param {Vector} other The other Vector.
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['copy'] = Vector.prototype.copy = function(other) {
+    this['x'] = other['x'];
+    this['y'] = other['y'];
+    return this;
+  };
+
+  // Change this vector to be perpendicular to what it was before. (Effectively
+  // roatates it 90 degrees in a clockwise direction)
+  /**
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['perp'] = Vector.prototype.perp = function() {
+    var x = this['x'];
+    this['x'] = this['y'];
+    this['y'] = -x;
+    return this;
+  };
+
+  // Rotate this vector (counter-clockwise) by the specified angle (in radians).
+  /**
+   * @param {number} angle The angle to rotate (in radians)
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['rotate'] = Vector.prototype.rotate = function (angle) {
+    var x = this['x'];
+    var y = this['y'];
+    this['x'] = x * Math.cos(angle) - y * Math.sin(angle);
+    this['y'] = x * Math.sin(angle) + y * Math.cos(angle);
+    return this;
+  };
+
+  // Rotate this vector (counter-clockwise) by the specified angle (in radians) which has already been calculated into sin and cos.
+  /**
+   * @param {number} sin - The Math.sin(angle)
+   * @param {number} cos - The Math.cos(angle)
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['rotatePrecalc'] = Vector.prototype.rotatePrecalc = function (sin, cos) {
+    var x = this['x'];
+    var y = this['y'];
+    this['x'] = x * cos - y * sin;
+    this['y'] = x * sin + y * cos;
+    return this;
+  };
+
+  // Reverse this vector.
+  /**
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['reverse'] = Vector.prototype.reverse = function() {
+    this['x'] = -this['x'];
+    this['y'] = -this['y'];
+    return this;
+  };
+
+
+  // Normalize this vector.  (make it have length of `1`)
+  /**
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['normalize'] = Vector.prototype.normalize = function() {
+    var d = this.len();
+    if(d > 0) {
+      this['x'] = this['x'] / d;
+      this['y'] = this['y'] / d;
+    }
+    return this;
+  };
+
+  // Add another vector to this one.
+  /**
+   * @param {Vector} other The other Vector.
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['add'] = Vector.prototype.add = function(other) {
+    this['x'] += other['x'];
+    this['y'] += other['y'];
+    return this;
+  };
+
+  // Subtract another vector from this one.
+  /**
+   * @param {Vector} other The other Vector.
+   * @return {Vector} This for chaiing.
+   */
+  Vector.prototype['sub'] = Vector.prototype.sub = function(other) {
+    this['x'] -= other['x'];
+    this['y'] -= other['y'];
+    return this;
+  };
+
+  // Scale this vector. An independant scaling factor can be provided
+  // for each axis, or a single scaling factor that will scale both `x` and `y`.
+  /**
+   * @param {number} x The scaling factor in the x direction.
+   * @param {?number=} y The scaling factor in the y direction.  If this
+   *   is not specified, the x scaling factor will be used.
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['scale'] = Vector.prototype.scale = function(x,y) {
+    this['x'] *= x;
+    this['y'] *= y || x;
+    return this;
+  };
+
+  // Project this vector on to another vector.
+  /**
+   * @param {Vector} other The vector to project onto.
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['project'] = Vector.prototype.project = function(other) {
+    var amt = this.dot(other) / other.len2();
+    this['x'] = amt * other['x'];
+    this['y'] = amt * other['y'];
+    return this;
+  };
+
+  // Project this vector onto a vector of unit length. This is slightly more efficient
+  // than `project` when dealing with unit vectors.
+  /**
+   * @param {Vector} other The unit vector to project onto.
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['projectN'] = Vector.prototype.projectN = function(other) {
+    var amt = this.dot(other);
+    this['x'] = amt * other['x'];
+    this['y'] = amt * other['y'];
+    return this;
+  };
+
+  // Reflect this vector on an arbitrary axis.
+  /**
+   * @param {Vector} axis The vector representing the axis.
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['reflect'] = Vector.prototype.reflect = function(axis) {
+    var x = this['x'];
+    var y = this['y'];
+    this.project(axis).scale(2);
+    this['x'] -= x;
+    this['y'] -= y;
+    return this;
+  };
+
+  // Reflect this vector on an arbitrary axis (represented by a unit vector). This is
+  // slightly more efficient than `reflect` when dealing with an axis that is a unit vector.
+  /**
+   * @param {Vector} axis The unit vector representing the axis.
+   * @return {Vector} This for chaining.
+   */
+  Vector.prototype['reflectN'] = Vector.prototype.reflectN = function(axis) {
+    var x = this['x'];
+    var y = this['y'];
+    this.projectN(axis).scale(2);
+    this['x'] -= x;
+    this['y'] -= y;
+    return this;
+  };
+
+  // Get the dot product of this vector and another.
+  /**
+   * @param {Vector}  other The vector to dot this one against.
+   * @return {number} The dot product.
+   */
+  Vector.prototype['dot'] = Vector.prototype.dot = function(other) {
+    return this['x'] * other['x'] + this['y'] * other['y'];
+  };
+
+  // Get the squared length of this vector.
+  /**
+   * @return {number} The length^2 of this vector.
+   */
+  Vector.prototype['len2'] = Vector.prototype.len2 = function() {
+    return this.dot(this);
+  };
+
+  // Get the length of this vector.
+  /**
+   * @return {number} The length of this vector.
+   */
+  Vector.prototype['len'] = Vector.prototype.len = function() {
+    return Math.sqrt(this.len2());
+  };
+
+  // ## Circle
+  //
+  // Represents a circle with a position and a radius.
+
+  // Create a new circle, optionally passing in a position and/or radius. If no position
+  // is given, the circle will be at `(0,0)`. If no radius is provided, the circle will
+  // have a radius of `0`.
+  /**
+   * @param {Vector=} pos A vector representing the position of the center of the circle
+   * @param {?number=} r The radius of the circle
+   * @constructor
+   */
+  function Circle(pos, r) {
+    this['pos'] = pos || new Vector();
+    this['r'] = r || 0;
+  }
+  SAT['Circle'] = Circle;
+
+  // ## Polygon
+  //
+  // Represents a *convex* polygon with any number of points (specified in counter-clockwise order)
+  //
+  // The edges/normals of the polygon will be calculated on creation and stored in the
+  // `edges` and `normals` properties. If you change the polygon's points, you will need
+  // to call `recalc` to recalculate the edges/normals.
+
+  // Create a new polygon, passing in a position vector, and an array of points (represented
+  // by vectors relative to the position vector). If no position is passed in, the position
+  // of the polygon will be `(0,0)`.
+  /**
+   * @param {Vector=} pos A vector representing the origin of the polygon. (all other
+   *   points are relative to this one)
+   * @param {Array.<Vector>=} points An array of vectors representing the points in the polygon,
+   *   in counter-clockwise order.
+   * @constructor
+   */
+  function Polygon(pos, points) {
+    this['pos'] = pos || new Vector();
+    this['points'] = points || [];
+    this.recalc();
+  }
+  SAT['Polygon'] = Polygon;
+
+  // Recalculates the edges and normals of the polygon. This **must** be called
+  // if the `points` array is modified at all and the edges or normals are to be
+  // accessed.
+  /**
+   * @return {Polygon} This for chaining.
+   */
+  Polygon.prototype['recalc'] = Polygon.prototype.recalc = function() {
+    // The edges here are the direction of the `n`th edge of the polygon, relative to
+    // the `n`th point. If you want to draw a given edge from the edge value, you must
+    // first translate to the position of the starting point.
+    this['edges'] = [];
+    // The normals here are the direction of the normal for the `n`th edge of the polygon, relative
+    // to the position of the `n`th point. If you want to draw an edge normal, you must first
+    // translate to the position of the starting point.
+    this['normals'] = [];
+    var points = this['points'];
+    var len = points.length;
+    for (var i = 0; i < len; i++) {
+      var p1 = points[i];
+      var p2 = i < len - 1 ? points[i + 1] : points[0];
+      var e = new Vector().copy(p2).sub(p1);
+      var n = new Vector().copy(e).perp().normalize();
+      this['edges'].push(e);
+      this['normals'].push(n);
+    }
+    return this;
+  };
+
+  // Rotates this polygon counter-clockwise around the origin of *its local coordinate system* (i.e. `pos`).
+  //
+  // Note: You do **not** need to call `recalc` after rotation.
+  /**
+   * @param {number} angle The angle to rotate (in radians)
+   * @return {Polygon} This for chaining.
+   */
+  Polygon.prototype['rotate'] = Polygon.prototype.rotate = function(angle) {
+    var i;
+    var points = this['points'];
+    var edges = this['edges'];
+    var normals = this['normals'];
+    var len = points.length;
+
+    //  Calc it just the once, rather than 4 times per array element
+    var cos = Math.cos(angle);
+    var sin = Math.sin(angle);
+
+    for (i = 0; i < len; i++) {
+      points[i].rotatePrecalc(sin, cos);
+      edges[i].rotatePrecalc(sin, cos);
+      normals[i].rotatePrecalc(sin, cos);
+    }
+    return this;
+  };
+
+  // Rotates this polygon counter-clockwise around the origin of *its local coordinate system* (i.e. `pos`).
+  //
+  // Note: You do **not** need to call `recalc` after rotation.
+  /**
+   * @param {number} angle The angle to rotate (in radians)
+   * @return {Polygon} This for chaining.
+   */
+  Polygon.prototype['scale'] = Polygon.prototype.scale = function(x, y) {
+    var i;
+    var points = this['points'];
+    var edges = this['edges'];
+    var normals = this['normals'];
+    var len = points.length;
+    for (i = 0; i < len; i++) {
+      points[i].scale(x,y);
+      edges[i].scale(x,y);
+      normals[i].scale(x,y);
+    }
+    return this;
+  };
+
+  // Translates the points of this polygon by a specified amount relative to the origin of *its own coordinate
+  // system* (i.e. `pos`).
+  //
+  // This is most useful to change the "center point" of a polygon.
+  //
+  // Note: You do **not** need to call `recalc` after translation.
+  /**
+   * @param {number} x The horizontal amount to translate.
+   * @param {number} y The vertical amount to translate.
+   * @return {Polygon} This for chaining.
+   */
+  Polygon.prototype['translate'] = Polygon.prototype.translate = function (x, y) {
+    var i;
+    var points = this['points'];
+    var len = points.length;
+    for (i = 0; i < len; i++) {
+      points[i].x += x;
+      points[i].y += y;
+    }
+    return this;
+  };
+
+  // ## Box
+  //
+  // Represents an axis-aligned box, with a width and height.
+
+
+  // Create a new box, with the specified position, width, and height. If no position
+  // is given, the position will be `(0,0)`. If no width or height are given, they will
+  // be set to `0`.
+  /**
+   * @param {Vector=} pos A vector representing the top-left of the box.
+   * @param {?number=} w The width of the box.
+   * @param {?number=} h The height of the box.
+   * @constructor
+   */
+  function Box(pos, w, h) {
+    this['pos'] = pos || new Vector();
+    this['w'] = w || 0;
+    this['h'] = h || 0;
+  }
+  SAT['Box'] = Box;
+
+  // Returns a polygon whose edges are the same as this box.
+  /**
+   * @return {Polygon} A new Polygon that represents this box.
+   */
+  Box.prototype['toPolygon'] = Box.prototype.toPolygon = function() {
+    var pos = this['pos'];
+    var w = this['w'];
+    var h = this['h'];
+    return new Polygon(new Vector(pos['x'], pos['y']), [
+     new Vector(), new Vector(w, 0),
+     new Vector(w,h), new Vector(0,h)
+    ]);
+  };
+
+  // ## Response
+  //
+  // An object representing the result of an intersection. Contains:
+  //  - The two objects participating in the intersection
+  //  - The vector representing the minimum change necessary to extract the first object
+  //    from the second one (as well as a unit vector in that direction and the magnitude
+  //    of the overlap)
+  //  - Whether the first object is entirely inside the second, and vice versa.
+  /**
+   * @constructor
+   */
+  function Response() {
+    this['a'] = null;
+    this['b'] = null;
+    this['overlapN'] = new Vector();
+    this['overlapV'] = new Vector();
+    this.clear();
+  }
+  SAT['Response'] = Response;
+
+  // Set some values of the response back to their defaults.  Call this between tests if
+  // you are going to reuse a single Response object for multiple intersection tests (recommented
+  // as it will avoid allcating extra memory)
+  /**
+   * @return {Response} This for chaining
+   */
+  Response.prototype['clear'] = Response.prototype.clear = function() {
+    this['aInB'] = true;
+    this['bInA'] = true;
+    this['overlap'] = Number.MAX_VALUE;
+    return this;
+  };
+
+  // ## Object Pools
+
+  // A pool of `Vector` objects that are used in calculations to avoid
+  // allocating memory.
+  /**
+   * @type {Array.<Vector>}
+   */
+  var T_VECTORS = [];
+  for (var i = 0; i < 10; i++) { T_VECTORS.push(new Vector()); }
+
+  // A pool of arrays of numbers used in calculations to avoid allocating
+  // memory.
+  /**
+   * @type {Array.<Array.<number>>}
+   */
+  var T_ARRAYS = [];
+  for (var i = 0; i < 5; i++) { T_ARRAYS.push([]); }
+
+  // ## Helper Functions
+
+  // Flattens the specified array of points onto a unit vector axis,
+  // resulting in a one dimensional range of the minimum and
+  // maximum value on that axis.
+  /**
+   * @param {Array.<Vector>} points The points to flatten.
+   * @param {Vector} normal The unit vector axis to flatten on.
+   * @param {Array.<number>} result An array.  After calling this function,
+   *   result[0] will be the minimum value,
+   *   result[1] will be the maximum value.
+   */
+  function flattenPointsOn(points, normal, result) {
+    var min = Number.MAX_VALUE;
+    var max = -Number.MAX_VALUE;
+    var len = points.length;
+    for (var i = 0; i < len; i++ ) {
+      // The magnitude of the projection of the point onto the normal
+      var dot = points[i].dot(normal);
+      if (dot < min) { min = dot; }
+      if (dot > max) { max = dot; }
+    }
+    result[0] = min; result[1] = max;
+  }
+
+  // Check whether two convex polygons are separated by the specified
+  // axis (must be a unit vector).
+  /**
+   * @param {Vector} aPos The position of the first polygon.
+   * @param {Vector} bPos The position of the second polygon.
+   * @param {Array.<Vector>} aPoints The points in the first polygon.
+   * @param {Array.<Vector>} bPoints The points in the second polygon.
+   * @param {Vector} axis The axis (unit sized) to test against.  The points of both polygons
+   *   will be projected onto this axis.
+   * @param {Response=} response A Response object (optional) which will be populated
+   *   if the axis is not a separating axis.
+   * @return {boolean} true if it is a separating axis, false otherwise.  If false,
+   *   and a response is passed in, information about how much overlap and
+   *   the direction of the overlap will be populated.
+   */
+  function isSeparatingAxis(aPos, bPos, aPoints, bPoints, axis, response) {
+    var rangeA = T_ARRAYS.pop();
+    var rangeB = T_ARRAYS.pop();
+    // The magnitude of the offset between the two polygons
+    var offsetV = T_VECTORS.pop().copy(bPos).sub(aPos);
+    var projectedOffset = offsetV.dot(axis);
+    // Project the polygons onto the axis.
+    flattenPointsOn(aPoints, axis, rangeA);
+    flattenPointsOn(bPoints, axis, rangeB);
+    // Move B's range to its position relative to A.
+    rangeB[0] += projectedOffset;
+    rangeB[1] += projectedOffset;
+    // Check if there is a gap. If there is, this is a separating axis and we can stop
+    if (rangeA[0] > rangeB[1] || rangeB[0] > rangeA[1]) {
+      T_VECTORS.push(offsetV);
+      T_ARRAYS.push(rangeA);
+      T_ARRAYS.push(rangeB);
+      return true;
+    }
+    // This is not a separating axis. If we're calculating a response, calculate the overlap.
+    if (response) {
+      var overlap = 0;
+      // A starts further left than B
+      if (rangeA[0] < rangeB[0]) {
+        response['aInB'] = false;
+        // A ends before B does. We have to pull A out of B
+        if (rangeA[1] < rangeB[1]) {
+          overlap = rangeA[1] - rangeB[0];
+          response['bInA'] = false;
+        // B is fully inside A.  Pick the shortest way out.
+        } else {
+          var option1 = rangeA[1] - rangeB[0];
+          var option2 = rangeB[1] - rangeA[0];
+          overlap = option1 < option2 ? option1 : -option2;
+        }
+      // B starts further left than A
+      } else {
+        response['bInA'] = false;
+        // B ends before A ends. We have to push A out of B
+        if (rangeA[1] > rangeB[1]) {
+          overlap = rangeA[0] - rangeB[1];
+          response['aInB'] = false;
+        // A is fully inside B.  Pick the shortest way out.
+        } else {
+          var option1 = rangeA[1] - rangeB[0];
+          var option2 = rangeB[1] - rangeA[0];
+          overlap = option1 < option2 ? option1 : -option2;
+        }
+      }
+      // If this is the smallest amount of overlap we've seen so far, set it as the minimum overlap.
+      var absOverlap = Math.abs(overlap);
+      if (absOverlap < response['overlap']) {
+        response['overlap'] = absOverlap;
+        response['overlapN'].copy(axis);
+        if (overlap < 0) {
+          response['overlapN'].reverse();
+        }
+      }
+    }
+    T_VECTORS.push(offsetV);
+    T_ARRAYS.push(rangeA);
+    T_ARRAYS.push(rangeB);
+    return false;
+  }
+
+  // Calculates which Vornoi region a point is on a line segment.
+  // It is assumed that both the line and the point are relative to `(0,0)`
+  //
+  //            |       (0)      |
+  //     (-1)  [S]--------------[E]  (1)
+  //            |       (0)      |
+  /**
+   * @param {Vector} line The line segment.
+   * @param {Vector} point The point.
+   * @return  {number} LEFT_VORNOI_REGION (-1) if it is the left region,
+   *          MIDDLE_VORNOI_REGION (0) if it is the middle region,
+   *          RIGHT_VORNOI_REGION (1) if it is the right region.
+   */
+  function vornoiRegion(line, point) {
+    var len2 = line.len2();
+    var dp = point.dot(line);
+    // If the point is beyond the start of the line, it is in the
+    // left vornoi region.
+    if (dp < 0) { return LEFT_VORNOI_REGION; }
+    // If the point is beyond the end of the line, it is in the
+    // right vornoi region.
+    else if (dp > len2) { return RIGHT_VORNOI_REGION; }
+    // Otherwise, it's in the middle one.
+    else { return MIDDLE_VORNOI_REGION; }
+  }
+  // Constants for Vornoi regions
+  /**
+   * @const
+   */
+  var LEFT_VORNOI_REGION = -1;
+  /**
+   * @const
+   */
+  var MIDDLE_VORNOI_REGION = 0;
+  /**
+   * @const
+   */
+  var RIGHT_VORNOI_REGION = 1;
+
+  // ## Collision Tests
+
+  // Check if two circles collide.
+  /**
+   * @param {Circle} a The first circle.
+   * @param {Circle} b The second circle.
+   * @param {Response=} response Response object (optional) that will be populated if
+   *   the circles intersect.
+   * @return {boolean} true if the circles intersect, false if they don't.
+   */
+  function testCircleCircle(a, b, response) {
+    // Check if the distance between the centers of the two
+    // circles is greater than their combined radius.
+    var differenceV = T_VECTORS.pop().copy(b['pos']).sub(a['pos']);
+    var totalRadius = a['r'] + b['r'];
+    var totalRadiusSq = totalRadius * totalRadius;
+    var distanceSq = differenceV.len2();
+    // If the distance is bigger than the combined radius, they don't intersect.
+    if (distanceSq > totalRadiusSq) {
+      T_VECTORS.push(differenceV);
+      return false;
+    }
+    // They intersect.  If we're calculating a response, calculate the overlap.
+    if (response) {
+      var dist = Math.sqrt(distanceSq);
+      response['a'] = a;
+      response['b'] = b;
+      response['overlap'] = totalRadius - dist;
+      response['overlapN'].copy(differenceV.normalize());
+      response['overlapV'].copy(differenceV).scale(response['overlap']);
+      response['aInB']= a['r'] <= b['r'] && dist <= b['r'] - a['r'];
+      response['bInA'] = b['r'] <= a['r'] && dist <= a['r'] - b['r'];
+    }
+    T_VECTORS.push(differenceV);
+    return true;
+  }
+  SAT['testCircleCircle'] = testCircleCircle;
+
+  // Check if a polygon and a circle collide.
+  /**
+   * @param {Polygon} polygon The polygon.
+   * @param {Circle} circle The circle.
+   * @param {Response=} response Response object (optional) that will be populated if
+   *   they interset.
+   * @return {boolean} true if they intersect, false if they don't.
+   */
+  function testPolygonCircle(polygon, circle, response) {
+    // Get the position of the circle relative to the polygon.
+    var circlePos = T_VECTORS.pop().copy(circle['pos']).sub(polygon['pos']);
+    var radius = circle['r'];
+    var radius2 = radius * radius;
+    var points = polygon['points'];
+    var len = points.length;
+    var edge = T_VECTORS.pop();
+    var point = T_VECTORS.pop();
+
+    // For each edge in the polygon:
+    for (var i = 0; i < len; i++) {
+      var next = i === len - 1 ? 0 : i + 1;
+      var prev = i === 0 ? len - 1 : i - 1;
+      var overlap = 0;
+      var overlapN = null;
+
+      // Get the edge.
+      edge.copy(polygon['edges'][i]);
+      // Calculate the center of the circle relative to the starting point of the edge.
+      point.copy(circlePos).sub(points[i]);
+
+      // If the distance between the center of the circle and the point
+      // is bigger than the radius, the polygon is definitely not fully in
+      // the circle.
+      if (response && point.len2() > radius2) {
+        response['aInB'] = false;
+      }
+
+      // Calculate which Vornoi region the center of the circle is in.
+      var region = vornoiRegion(edge, point);
+      // If it's the left region:
+      if (region === LEFT_VORNOI_REGION) {
+        // We need to make sure we're in the RIGHT_VORNOI_REGION of the previous edge.
+        edge.copy(polygon['edges'][prev]);
+        // Calculate the center of the circle relative the starting point of the previous edge
+        var point2 = T_VECTORS.pop().copy(circlePos).sub(points[prev]);
+        region = vornoiRegion(edge, point2);
+        if (region === RIGHT_VORNOI_REGION) {
+          // It's in the region we want.  Check if the circle intersects the point.
+          var dist = point.len();
+          if (dist > radius) {
+            // No intersection
+            T_VECTORS.push(circlePos);
+            T_VECTORS.push(edge);
+            T_VECTORS.push(point);
+            T_VECTORS.push(point2);
+            return false;
+          } else if (response) {
+            // It intersects, calculate the overlap.
+            response['bInA'] = false;
+            overlapN = point.normalize();
+            overlap = radius - dist;
+          }
+        }
+        T_VECTORS.push(point2);
+      // If it's the right region:
+      } else if (region === RIGHT_VORNOI_REGION) {
+        // We need to make sure we're in the left region on the next edge
+        edge.copy(polygon['edges'][next]);
+        // Calculate the center of the circle relative to the starting point of the next edge.
+        point.copy(circlePos).sub(points[next]);
+        region = vornoiRegion(edge, point);
+        if (region === LEFT_VORNOI_REGION) {
+          // It's in the region we want.  Check if the circle intersects the point.
+          var dist = point.len();
+          if (dist > radius) {
+            // No intersection
+            T_VECTORS.push(circlePos);
+            T_VECTORS.push(edge);
+            T_VECTORS.push(point);
+            return false;
+          } else if (response) {
+            // It intersects, calculate the overlap.
+            response['bInA'] = false;
+            overlapN = point.normalize();
+            overlap = radius - dist;
+          }
+        }
+      // Otherwise, it's the middle region:
+      } else {
+        // Need to check if the circle is intersecting the edge,
+        // Change the edge into its "edge normal".
+        var normal = edge.perp().normalize();
+        // Find the perpendicular distance between the center of the
+        // circle and the edge.
+        var dist = point.dot(normal);
+        var distAbs = Math.abs(dist);
+        // If the circle is on the outside of the edge, there is no intersection.
+        if (dist > 0 && distAbs > radius) {
+          // No intersection
+          T_VECTORS.push(circlePos);
+          T_VECTORS.push(normal);
+          T_VECTORS.push(point);
+          return false;
+        } else if (response) {
+          // It intersects, calculate the overlap.
+          overlapN = normal;
+          overlap = radius - dist;
+          // If the center of the circle is on the outside of the edge, or part of the
+          // circle is on the outside, the circle is not fully inside the polygon.
+          if (dist >= 0 || overlap < 2 * radius) {
+            response['bInA'] = false;
+          }
+        }
+      }
+
+      // If this is the smallest overlap we've seen, keep it.
+      // (overlapN may be null if the circle was in the wrong Vornoi region).
+      if (overlapN && response && Math.abs(overlap) < Math.abs(response['overlap'])) {
+        response['overlap'] = overlap;
+        response['overlapN'].copy(overlapN);
+      }
+    }
+
+    // Calculate the final overlap vector - based on the smallest overlap.
+    if (response) {
+      response['a'] = polygon;
+      response['b'] = circle;
+      response['overlapV'].copy(response['overlapN']).scale(response['overlap']);
+    }
+    T_VECTORS.push(circlePos);
+    T_VECTORS.push(edge);
+    T_VECTORS.push(point);
+    return true;
+  }
+  SAT['testPolygonCircle'] = testPolygonCircle;
+
+  // Check if a circle and a polygon collide.
+  //
+  // **NOTE:** This is slightly less efficient than polygonCircle as it just
+  // runs polygonCircle and reverses everything at the end.
+  /**
+   * @param {Circle} circle The circle.
+   * @param {Polygon} polygon The polygon.
+   * @param {Response=} response Response object (optional) that will be populated if
+   *   they interset.
+   * @return {boolean} true if they intersect, false if they don't.
+   */
+  function testCirclePolygon(circle, polygon, response) {
+    // Test the polygon against the circle.
+    var result = testPolygonCircle(polygon, circle, response);
+    if (result && response) {
+      // Swap A and B in the response.
+      var a = response['a'];
+      var aInB = response['aInB'];
+      response['overlapN'].reverse();
+      response['overlapV'].reverse();
+      response['a'] = response['b'];
+      response['b'] = a;
+      response['aInB'] = response['bInA'];
+      response['bInA'] = aInB;
+    }
+    return result;
+  }
+  SAT['testCirclePolygon'] = testCirclePolygon;
+
+  // Checks whether polygons collide.
+  /**
+   * @param {Polygon} a The first polygon.
+   * @param {Polygon} b The second polygon.
+   * @param {Response=} response Response object (optional) that will be populated if
+   *   they interset.
+   * @return {boolean} true if they intersect, false if they don't.
+   */
+  function testPolygonPolygon(a, b, response) {
+    var aPoints = a['points'];
+    var aLen = aPoints.length;
+    var bPoints = b['points'];
+    var bLen = bPoints.length;
+    // If any of the edge normals of A is a separating axis, no intersection.
+    for (var i = 0; i < aLen; i++) {
+      if (isSeparatingAxis(a['pos'], b['pos'], aPoints, bPoints, a['normals'][i], response)) {
+        return false;
+      }
+    }
+    // If any of the edge normals of B is a separating axis, no intersection.
+    for (var i = 0;i < bLen; i++) {
+      if (isSeparatingAxis(a['pos'], b['pos'], aPoints, bPoints, b['normals'][i], response)) {
+        return false;
+      }
+    }
+    // Since none of the edge normals of A or B are a separating axis, there is an intersection
+    // and we've already calculated the smallest overlap (in isSeparatingAxis).  Calculate the
+    // final overlap vector.
+    if (response) {
+      response['a'] = a;
+      response['b'] = b;
+      response['overlapV'].copy(response['overlapN']).scale(response['overlap']);
+>>>>>>> upstream/master
+    }
+    
+};
+
+<<<<<<< HEAD
+=======
+  return SAT;
+})();
+
+>>>>>>> upstream/master
 /**
 * @author       Richard Davey <rich@photonstorm.com>
 * @copyright    2014 Photon Storm Ltd.
@@ -51602,12 +52975,25 @@ Phaser.Physics.World.prototype = {
 
         var i = bodies.length;
 
+<<<<<<< HEAD
         while (i--)
         {
             bodies.setMaterial(material);
         }
 
     },
+=======
+        for (var i = 0; i < this._mapData.length; i++)
+        {
+            if (this.separateTile(sprite.body, this._mapData[i]))
+            {
+                //  They collided, is there a custom process callback?
+                if (processCallback)
+                {
+                    if (processCallback.call(callbackContext, sprite, this._mapData[i]))
+                    {
+                        this._total++;
+>>>>>>> upstream/master
 
     /**
     * Creates a Material. Materials are applied to Shapes owned by a Body and can be set with Body.setMaterial().
@@ -51632,7 +53018,11 @@ Phaser.Physics.World.prototype = {
             body.setMaterial(material);
         }
 
+<<<<<<< HEAD
         return material;
+=======
+        return true;
+>>>>>>> upstream/master
 
     },
 
@@ -51709,7 +53099,11 @@ Phaser.Physics.World.prototype = {
 
         while (i--)
         {
+<<<<<<< HEAD
             output.push(this.world.springs[i]);
+=======
+            return false;
+>>>>>>> upstream/master
         }
 
         return output;
@@ -51727,6 +53121,7 @@ Phaser.Physics.World.prototype = {
     */
     hitTest: function (worldPoint, bodies, precision) {
 
+        return result;
     },
 
     /**
@@ -51776,6 +53171,7 @@ Phaser.Physics.World.prototype = {
     },
 
     /**
+<<<<<<< HEAD
     * @method Phaser.Physics.World.prototype.createBody
     * @param {number} x - The x coordinate of Body.
     * @param {number} y - The y coordinate of Body.
@@ -51827,6 +53223,13 @@ Phaser.Physics.World.prototype = {
     * @param {(number[]|...number)} points - An array of 2d vectors that form the convex or concave polygon. 
     *                                       Either [[0,0], [0,1],...] or a flat array of numbers that will be interpreted as [x,y, x,y, ...], 
     *                                       or the arguments passed can be flat x,y values e.g. `setPolygon(options, x,y, x,y, x,y, ...)` where `x` and `y` are numbers.
+=======
+    * The core separation function to separate a physics body and a tile.
+    * @method Phaser.Physics.Arcade#separateTile
+    * @param {Phaser.Physics.Arcade.Body} body - The Body object to separate.
+    * @param {Phaser.Tile} tile - The tile to collide against.
+    * @returns {boolean} Returns true if the body was separated, otherwise false.
+>>>>>>> upstream/master
     */
     createParticle: function (x, y, mass, addToWorld, options, data) {
 
@@ -52730,8 +54133,15 @@ Phaser.Physics.Body.prototype = {
     */
     postUpdate: function () {
 
+<<<<<<< HEAD
         this.sprite.x = this.p2px(this.data.position[0]);
         this.sprite.y = this.p2px(this.data.position[1]);
+=======
+            if (this.speed > 0 || !this.velocity.isZero())
+            {
+                this.velocity.x = Math.cos(this.angle) * this.speed;
+                this.velocity.y = Math.sin(this.angle) * this.speed;
+>>>>>>> upstream/master
 
         if (!this.fixedRotation)
         {
@@ -52853,9 +54263,18 @@ Phaser.Physics.Body.prototype = {
         if (typeof offsetY === 'undefined') { offsetY = 0; }
         if (typeof rotation === 'undefined') { rotation = 0; }
 
+<<<<<<< HEAD
         this.data.addShape(shape, [this.px2p(offsetX), this.px2p(offsetY)], rotation);
 
         return shape;
+=======
+        if (this.rebound)
+        {
+            this.processRebound(body, response.overlapN);
+            this.reboundCheck(true, true, false);
+            body.reboundCheck(true, true, false);
+        }
+>>>>>>> upstream/master
 
     },
 
@@ -52873,7 +54292,16 @@ Phaser.Physics.Body.prototype = {
 
         var shape = new p2.Circle(this.px2p(radius));
 
+<<<<<<< HEAD
         return this.addShape(shape, offsetX, offsetY, rotation);
+=======
+        if (this.rebound)
+        {
+            this.processRebound(body, response.overlapN);
+            this.reboundCheck(true, true, false);
+            body.reboundCheck(true, true, false);
+        }
+>>>>>>> upstream/master
 
     },
 
@@ -52962,9 +54390,30 @@ Phaser.Physics.Body.prototype = {
     * @param {number} [rotation=0] - Local rotation of the shape relative to the body center of mass, specified in radians.
     * @return {p2.Capsule} The Capsule shape that was added to the Body.
     */
+<<<<<<< HEAD
     addCapsule: function (length, radius, offsetX, offsetY, rotation) {
 
         var shape = new p2.Capsule(this.px2p(length), radius);
+=======
+    processRebound: function (body, overlapN) {
+
+        //  Don't rebound again if they've already rebounded in this frame
+        if (!(this._vx <= 0 && this.velocity.x > 0) && !(this._vx >= 0 && this.velocity.x < 0))
+        {
+            if (overlapN.x != 0)
+            {
+                this.velocity.x = body.velocity.x - this.velocity.x * this.bounce.x;
+            }
+        }
+
+        if (!(this._vy <= 0 && this.velocity.y > 0) && !(this._vy >= 0 && this.velocity.y < 0))
+        {
+            if (overlapN.y != 0)
+            {
+                this.velocity.y = body.velocity.y - this.velocity.y * this.bounce.y;
+            }
+        }
+>>>>>>> upstream/master
 
         return this.addShape(shape, offsetX, offsetY, rotation);
 
@@ -53106,7 +54555,14 @@ Phaser.Physics.Body.prototype = {
     */
     setRectangleFromSprite: function (sprite) {
 
+<<<<<<< HEAD
         if (typeof sprite === 'undefined') { sprite = this.sprite; }
+=======
+        // if (this.inContact(body))
+        // {
+            // return false;
+        // }
+>>>>>>> upstream/master
 
         //  because Sprite.phyicsEnabled = true now sets anchor to 0.5
         // var px = (sprite.width / 2) + (-sprite.width * sprite.anchor.x);
@@ -53137,7 +54593,15 @@ Phaser.Physics.Body.prototype = {
         }
         else
         {
+<<<<<<< HEAD
             shape.material = material;
+=======
+            //  They can only contact like this if at least one of their sides is open, otherwise it's a separation
+            if (!this.checkCollision.up || !this.checkCollision.down || !this.checkCollision.left || !this.checkCollision.right || !body.checkCollision.up || !body.checkCollision.down || !body.checkCollision.left || !body.checkCollision.right)
+            {
+                this.addContact(body);
+            }
+>>>>>>> upstream/master
         }
 
     },
@@ -53160,7 +54624,12 @@ Phaser.Physics.Body.prototype = {
 
         if (data && data.shape)
         {
+<<<<<<< HEAD
             var temp = [];
+=======
+            return false;
+        }
+>>>>>>> upstream/master
 
             //  We've a list of numbers
             for (var i = 0, len = data.shape.length; i < len; i += 2)
@@ -53172,6 +54641,8 @@ Phaser.Physics.Body.prototype = {
         }
 
         return false;
+
+        return true;
 
     },
 
@@ -53194,9 +54665,13 @@ Phaser.Physics.Body.prototype = {
 
         if (data && data.shape)
         {
+<<<<<<< HEAD
             this.mass = data.density;
             //  set friction + bounce here
             this.loadPolygon(key, object);
+=======
+            return false;
+>>>>>>> upstream/master
         }
 
     },
@@ -53211,6 +54686,8 @@ Phaser.Physics.Body.prototype = {
     p2px: function (v) {
 
         return v *= -20;
+
+        return true;
 
     },
 
@@ -54955,13 +56432,13 @@ Phaser.Tilemap = function (game, key) {
     this._results = [];
 
     /**
-    * @property {number} _tempA - Internal var.
+    * @property {number} _tempA - Internal cache var.
     * @private
     */
     this._tempA = 0;
 
     /**
-    * @property {number} _tempB - Internal var.
+    * @property {number} _tempB - Internal cache var.
     * @private
     */
     this._tempB = 0;
@@ -55016,7 +56493,7 @@ Phaser.Tilemap.prototype = {
             format: Phaser.Tilemap.CSV,
             data: data,
             indexes: [],
-			dirty: true
+            dirty: true
 
         });
 
@@ -55775,7 +57252,7 @@ Phaser.Tilemap.prototype = {
                 this.layers[layer].data[y][x].index = tile;
             }
 
-			this.layers[layer].dirty = true;
+            this.layers[layer].dirty = true;
             this.calculateFaces(layer);
         }
 
@@ -55927,15 +57404,15 @@ Phaser.Tilemap.prototype = {
         }
 
         //  Find out the difference between tileblock[1].x/y and x/y and use it as an offset, as it's the top left of the block to paste
-        var diffX = tileblock[1].x - x;
-        var diffY = tileblock[1].y - y;
+        var diffX = x - tileblock[1].x;
+        var diffY = y - tileblock[1].y;
 
         for (var i = 1; i < tileblock.length; i++)
         {
             this.layers[layer].data[ diffY + tileblock[i].y ][ diffX + tileblock[i].x ].copy(tileblock[i]);
         }
 
-		this.layers[layer].dirty = true;
+        this.layers[layer].dirty = true;
         this.calculateFaces(layer);
 
     },
@@ -57528,6 +59005,10 @@ Phaser.TilemapParser = {
             newSet.columns = (set.imagewidth - set.margin) / (set.tilewidth + set.spacing);
             newSet.total = newSet.rows * newSet.columns;
 
+            if (newSet.rows % 1 !== 0 || newSet.columns % 1 !== 0) {
+                console.warn('TileSet image dimensions do not match expected dimensions.');
+            }
+
             tilesets.push(newSet);
         }
 
@@ -57742,5 +59223,294 @@ Phaser.Tileset.prototype = {
 };
 
 Phaser.Tileset.prototype.constructor = Phaser.Tileset;
+<<<<<<< HEAD
+=======
+
+/**
+* We're replacing a couple of Pixi's methods here to fix or add some vital functionality:
+*
+* 1) Added support for Trimmed sprite sheets
+* 2) Skip display objects with an alpha of zero
+* 3) Avoid Style Recalculation from the incorrect bgcolor value
+* 4) Added support for Canvas unit rounding via Phaser.CANVAS_PX_ROUND boolean (disabled by default).
+*
+* Hopefully we can remove this once Pixi has been updated to support these things.
+*/
+
+/**
+ * Renders the stage to its canvas view
+ *
+ * @method render
+ * @param stage {Stage} the Stage element to be rendered
+ */
+PIXI.CanvasRenderer.prototype.render = function(stage)
+{
+    PIXI.texturesToUpdate.length = 0;
+    PIXI.texturesToDestroy.length = 0;
+    
+    PIXI.visibleCount++;
+    stage.updateTransform();
+
+    this.context.setTransform(1, 0, 0, 1, 0, 0);
+
+    if (Phaser.CANVAS_CLEAR_RECT)
+    {
+        this.context.clearRect(0, 0, this.width, this.height)
+    }
+
+    this.renderDisplayObject(stage, false);
+   
+    //  Remove frame updates
+    if (PIXI.Texture.frameUpdates.length > 0)
+    {
+        PIXI.Texture.frameUpdates.length = 0;
+    }
+    
+}
+
+// @param {boolean} [renderHidden=false] - If true displayObjects that have their visible property set to false will still be rendered.
+
+PIXI.CanvasRenderer.prototype.renderDisplayObject = function(displayObject, renderHidden)
+{
+    // Once the display object hits this we can break the loop  
+    var testObject = displayObject.last._iNext;
+    displayObject = displayObject.first;
+    
+    do
+    {
+        if (!displayObject.visible && !renderHidden)
+        {
+            displayObject = displayObject.last._iNext;
+            continue;
+        }
+        
+        if (!displayObject.renderable || displayObject.alpha === 0)
+        {
+            displayObject = displayObject._iNext;
+            continue;
+        }
+        
+        if (displayObject instanceof PIXI.Sprite)
+        {
+            if (displayObject.texture.frame)
+            {
+                this.context.globalAlpha = displayObject.worldAlpha;
+
+                if (Phaser.CANVAS_PX_ROUND)
+                {
+                    this.context.setTransform(
+                            displayObject.worldTransform[0],
+                            displayObject.worldTransform[3],
+                            displayObject.worldTransform[1],
+                            displayObject.worldTransform[4],
+                            Math.floor(displayObject.worldTransform[2]),
+                            Math.floor(displayObject.worldTransform[5]));
+                }
+                else
+                {
+                    this.context.setTransform(
+                            displayObject.worldTransform[0],
+                            displayObject.worldTransform[3],
+                            displayObject.worldTransform[1],
+                            displayObject.worldTransform[4],
+                            displayObject.worldTransform[2],
+                            displayObject.worldTransform[5]);
+                }
+
+                if (displayObject.texture.trimmed)
+                {
+                    this.context.transform(1, 0, 0, 1, displayObject.texture.trim.x, displayObject.texture.trim.y);
+                }
+
+                //if smoothingEnabled is supported and we need to change the smoothing property for this texture
+                if (this.smoothProperty && this.scaleMode !== displayObject.texture.baseTexture.scaleMode)
+                {
+                    this.scaleMode = displayObject.texture.baseTexture.scaleMode;
+                    this.context[this.smoothProperty] = (this.scaleMode === PIXI.BaseTexture.SCALE_MODE.LINEAR);
+                }
+                    
+                this.context.drawImage(
+                    displayObject.texture.baseTexture.source,
+                    displayObject.texture.frame.x,
+                    displayObject.texture.frame.y,
+                    displayObject.texture.frame.width,
+                    displayObject.texture.frame.height,
+                    Math.floor((displayObject.anchor.x) * -displayObject.texture.frame.width),
+                    Math.floor((displayObject.anchor.y) * -displayObject.texture.frame.height),
+                    displayObject.texture.frame.width,
+                    displayObject.texture.frame.height);
+            }
+        }
+        else if (displayObject instanceof PIXI.Strip)
+        {
+            this.context.setTransform(displayObject.worldTransform[0], displayObject.worldTransform[3], displayObject.worldTransform[1], displayObject.worldTransform[4], displayObject.worldTransform[2], displayObject.worldTransform[5])
+            this.renderStrip(displayObject);
+        }
+        else if (displayObject instanceof PIXI.TilingSprite)
+        {
+            this.context.setTransform(displayObject.worldTransform[0], displayObject.worldTransform[3], displayObject.worldTransform[1], displayObject.worldTransform[4], displayObject.worldTransform[2], displayObject.worldTransform[5])
+            this.renderTilingSprite(displayObject);
+        }
+        else if (displayObject instanceof PIXI.CustomRenderable)
+        {
+            displayObject.renderCanvas(this);
+        }
+        else if (displayObject instanceof PIXI.Graphics)
+        {
+            this.context.setTransform(displayObject.worldTransform[0], displayObject.worldTransform[3], displayObject.worldTransform[1], displayObject.worldTransform[4], displayObject.worldTransform[2], displayObject.worldTransform[5])
+            PIXI.CanvasGraphics.renderGraphics(displayObject, this.context);
+        }
+        else if (displayObject instanceof PIXI.FilterBlock)
+        {
+            if(displayObject.data instanceof PIXI.Graphics)
+            {
+                var mask = displayObject.data;
+
+                if(displayObject.open)
+                {
+                    this.context.save();
+
+                    var cacheAlpha = mask.alpha;
+                    var maskTransform = mask.worldTransform;
+
+                    this.context.setTransform(maskTransform[0], maskTransform[3], maskTransform[1], maskTransform[4], maskTransform[2], maskTransform[5]);
+
+                    mask.worldAlpha = 0.5;
+
+                    this.context.worldAlpha = 0;
+
+                    PIXI.CanvasGraphics.renderGraphicsMask(mask, this.context);
+                    this.context.clip();
+
+                    mask.worldAlpha = cacheAlpha;
+                }
+                else
+                {
+                    this.context.restore();
+                }
+            }
+        }
+        //  count++
+        displayObject = displayObject._iNext;
+    }
+    while(displayObject != testObject)
+    
+}
+
+PIXI.WebGLBatch.prototype.update = function()
+{
+    // var gl = this.gl;
+    // var worldTransform, width, height, aX, aY, w0, w1, h0, h1, index, index2, index3
+
+    var worldTransform, width, height, aX, aY, w0, w1, h0, h1, index;
+
+    var a, b, c, d, tx, ty;
+
+    var indexRun = 0;
+
+    var displayObject = this.head;
+
+    while(displayObject)
+    {
+        if(displayObject.vcount === PIXI.visibleCount)
+        {
+            width = displayObject.texture.frame.width;
+            height = displayObject.texture.frame.height;
+
+            // TODO trim??
+            aX = displayObject.anchor.x;// - displayObject.texture.trim.x
+            aY = displayObject.anchor.y; //- displayObject.texture.trim.y
+            w0 = width * (1-aX);
+            w1 = width * -aX;
+
+            h0 = height * (1-aY);
+            h1 = height * -aY;
+
+            index = indexRun * 8;
+
+            worldTransform = displayObject.worldTransform;
+
+            a = worldTransform[0];
+            b = worldTransform[3];
+            c = worldTransform[1];
+            d = worldTransform[4];
+            tx = worldTransform[2];
+            ty = worldTransform[5];
+
+            if (displayObject.texture.trimmed)
+            {
+                tx += displayObject.texture.trim.x;
+                ty += displayObject.texture.trim.y;
+            }
+
+            this.verticies[index + 0 ] = a * w1 + c * h1 + tx;
+            this.verticies[index + 1 ] = d * h1 + b * w1 + ty;
+
+            this.verticies[index + 2 ] = a * w0 + c * h1 + tx;
+            this.verticies[index + 3 ] = d * h1 + b * w0 + ty;
+
+            this.verticies[index + 4 ] = a * w0 + c * h0 + tx;
+            this.verticies[index + 5 ] = d * h0 + b * w0 + ty;
+
+            this.verticies[index + 6] =  a * w1 + c * h0 + tx;
+            this.verticies[index + 7] =  d * h0 + b * w1 + ty;
+
+            if(displayObject.updateFrame || displayObject.texture.updateFrame)
+            {
+                this.dirtyUVS = true;
+
+                var texture = displayObject.texture;
+
+                var frame = texture.frame;
+                var tw = texture.baseTexture.width;
+                var th = texture.baseTexture.height;
+
+                this.uvs[index + 0] = frame.x / tw;
+                this.uvs[index +1] = frame.y / th;
+
+                this.uvs[index +2] = (frame.x + frame.width) / tw;
+                this.uvs[index +3] = frame.y / th;
+
+                this.uvs[index +4] = (frame.x + frame.width) / tw;
+                this.uvs[index +5] = (frame.y + frame.height) / th;
+
+                this.uvs[index +6] = frame.x / tw;
+                this.uvs[index +7] = (frame.y + frame.height) / th;
+
+                displayObject.updateFrame = false;
+            }
+
+            // TODO this probably could do with some optimisation....
+            if(displayObject.cacheAlpha != displayObject.worldAlpha)
+            {
+                displayObject.cacheAlpha = displayObject.worldAlpha;
+
+                var colorIndex = indexRun * 4;
+                this.colors[colorIndex] = this.colors[colorIndex + 1] = this.colors[colorIndex + 2] = this.colors[colorIndex + 3] = displayObject.worldAlpha;
+                this.dirtyColors = true;
+            }
+        }
+        else
+        {
+            index = indexRun * 8;
+
+            this.verticies[index + 0 ] = 0;
+            this.verticies[index + 1 ] = 0;
+
+            this.verticies[index + 2 ] = 0;
+            this.verticies[index + 3 ] = 0;
+
+            this.verticies[index + 4 ] = 0;
+            this.verticies[index + 5 ] = 0;
+
+            this.verticies[index + 6] = 0;
+            this.verticies[index + 7] = 0;
+        }
+
+        indexRun++;
+        displayObject = displayObject.__next;
+    }
+}
+>>>>>>> upstream/master
   return Phaser;
 });

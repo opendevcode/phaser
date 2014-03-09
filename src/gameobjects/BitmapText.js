@@ -184,8 +184,12 @@ Phaser.BitmapText.prototype.update = function() {
 }
 
 /**
+<<<<<<< HEAD
 * Automatically called by World.postUpdate.
 * @method Phaser.BitmapText.prototype.postUpdate
+=======
+* @method Phaser.BitmapText.prototype.destroy
+>>>>>>> upstream/master
 */
 Phaser.BitmapText.prototype.postUpdate = function () {
 

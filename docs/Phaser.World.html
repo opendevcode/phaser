@@ -445,6 +445,7 @@
 					<ul class="dropdown-menu ">
 						
 						<li>
+<<<<<<< HEAD
 							<a href="global.html#canUseNewCanvasBlendModes">canUseNewCanvasBlendModes</a>
 						</li>
 						
@@ -466,6 +467,9 @@
 						
 						<li>
 							<a href="global.html#rgb2hex">rgb2hex</a>
+=======
+							<a href="global.html#SAT">SAT</a>
+>>>>>>> upstream/master
 						</li>
 						
 
@@ -6069,7 +6073,11 @@ For example: Group.forEachAlive(causeDamage, this, 500)</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
+<<<<<<< HEAD
         <a href="Group.js.html">core/Group.js</a>, <a href="Group.js.html#sunlight-1-line-835">line 835</a>
+=======
+        <a href="Group.js.html">core/Group.js</a>, <a href="Group.js.html#sunlight-1-line-1024">line 1024</a>
+>>>>>>> upstream/master
     </li></ul></dd>
     
 
@@ -6217,7 +6225,11 @@ For example: Group.forEachDead(bringToLife, this)</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
+<<<<<<< HEAD
         <a href="Group.js.html">core/Group.js</a>, <a href="Group.js.html#sunlight-1-line-853">line 853</a>
+=======
+        <a href="Group.js.html">core/Group.js</a>, <a href="Group.js.html#sunlight-1-line-1042">line 1042</a>
+>>>>>>> upstream/master
     </li></ul></dd>
     
 
@@ -6253,7 +6265,11 @@ For example: Group.forEachDead(bringToLife, this)</p>
     
     
     <div class="description">
+<<<<<<< HEAD
         <p>Allows you to call your own function on each member of this Group where child.exists=true. You must pass the callback and context in which it will run.
+=======
+        <p>Allows you to call your own function on each existing member of this Group (where child.exists=true). You must pass the callback and context in which it will run.
+>>>>>>> upstream/master
 You can add as many parameters as you like, which will all be passed to the callback along with the child.
 For example: Group.forEachExists(causeDamage, this, 500)</p>
     </div>
@@ -6365,7 +6381,11 @@ For example: Group.forEachExists(causeDamage, this, 500)</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
+<<<<<<< HEAD
         <a href="Group.js.html">core/Group.js</a>, <a href="Group.js.html#sunlight-1-line-817">line 817</a>
+=======
+        <a href="Group.js.html">core/Group.js</a>, <a href="Group.js.html#sunlight-1-line-1006">line 1006</a>
+>>>>>>> upstream/master
     </li></ul></dd>
     
 
@@ -7894,6 +7914,76 @@ Group.multiplyAll('x', 2) will x2 the child.x value.</p>
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="Group.js.html">core/Group.js</a>, <a href="Group.js.html#sunlight-1-line-722">line 722</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="preUpdate"><span class="type-signature"></span>preUpdate<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>This is called automatically after the plugins preUpdate and before the State.update.
+Most objects have preUpdate methods and it's where initial movement, drawing and calculations are done.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="World.js.html">core/World.js</a>, <a href="World.js.html#sunlight-1-line-63">line 63</a>
     </li></ul></dd>
     
 
@@ -10131,7 +10221,81 @@ You cannot swap a child with itself, or swap un-parented children, doing so will
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
+<<<<<<< HEAD
         <a href="Group.js.html">core/Group.js</a>, <a href="Group.js.html#sunlight-1-line-746">line 746</a>
+=======
+        <a href="Group.js.html">core/Group.js</a>, <a href="Group.js.html#sunlight-1-line-409">line 409</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>This is called automatically after the State.update, but before particles or plugins update.
+Most objects won't have an update method set unless explicitly given one.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="World.js.html">core/World.js</a>, <a href="World.js.html#sunlight-1-line-93">line 93</a>
+>>>>>>> upstream/master
     </li></ul></dd>
     
 
@@ -10182,7 +10346,11 @@ You cannot swap a child with itself, or swap un-parented children, doing so will
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a>
+<<<<<<< HEAD
 		on Mon Feb 24 2014 12:11:48 GMT-0000 (GMT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+=======
+		on Mon Feb 24 2014 01:12:33 GMT-0000 (GMT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+>>>>>>> upstream/master
 		</span>
 				</footer>
 			</div>

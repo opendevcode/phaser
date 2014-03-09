@@ -186,7 +186,7 @@ Phaser.TweenManager.prototype = {
     },
 
     /**
-    * Pauses all currently paused tweens.
+    * Resumes all currently paused tweens.
     *
     * @method Phaser.TweenManager#resumeAll
     */

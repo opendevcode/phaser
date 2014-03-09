@@ -124,13 +124,13 @@ Phaser.Tilemap = function (game, key) {
     this._results = [];
 
     /**
-    * @property {number} _tempA - Internal var.
+    * @property {number} _tempA - Internal cache var.
     * @private
     */
     this._tempA = 0;
 
     /**
-    * @property {number} _tempB - Internal var.
+    * @property {number} _tempB - Internal cache var.
     * @private
     */
     this._tempB = 0;
@@ -185,7 +185,7 @@ Phaser.Tilemap.prototype = {
             format: Phaser.Tilemap.CSV,
             data: data,
             indexes: [],
-			dirty: true
+            dirty: true
 
         });
 
@@ -944,7 +944,7 @@ Phaser.Tilemap.prototype = {
                 this.layers[layer].data[y][x].index = tile;
             }
 
-			this.layers[layer].dirty = true;
+            this.layers[layer].dirty = true;
             this.calculateFaces(layer);
         }
 
@@ -1096,15 +1096,15 @@ Phaser.Tilemap.prototype = {
         }
 
         //  Find out the difference between tileblock[1].x/y and x/y and use it as an offset, as it's the top left of the block to paste
-        var diffX = tileblock[1].x - x;
-        var diffY = tileblock[1].y - y;
+        var diffX = x - tileblock[1].x;
+        var diffY = y - tileblock[1].y;
 
         for (var i = 1; i < tileblock.length; i++)
         {
             this.layers[layer].data[ diffY + tileblock[i].y ][ diffX + tileblock[i].x ].copy(tileblock[i]);
         }
 
-		this.layers[layer].dirty = true;
+        this.layers[layer].dirty = true;
         this.calculateFaces(layer);
 
     },
